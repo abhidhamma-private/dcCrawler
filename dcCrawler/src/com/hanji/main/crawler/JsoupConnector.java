@@ -2,32 +2,36 @@ package com.hanji.main.crawler;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 //galid/ x페이지부터x페이지까지/ 저장경로/
+
+
+/**
+ * @author
+ * URL의 doc객체를 반환해주는 클래스
+ */
 public class JsoupConnector {
-	private static final String GETDOCFROMLIST = "1";
 	
-	
-	public Document getJsoupDoc(String url, HashMap<String, String> parameters,String Host) {
+	public Document getJsoupDoc(String URL, HashMap<String, String> parameters, String host) {
 		Document doc = null;
 		
 		if(parameters.size()>0) {
-			url+="?";
-			for(int i=1; i<parameters.size(); i++) {
-				url+=parameters.get(i);
+			for(Map.Entry<String, String> entry : parameters.entrySet()){
+				URL+="&"+entry.getKey()+"="+entry.getValue();  
 			}
 		}
-		
+		System.out.println("connect URL : "+URL);
 		try {
-			doc = Jsoup.connect(url)
+			doc = Jsoup.connect(URL)
 					.header("Accept",
 							"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
 					.header("Accept-Encoding", "gzip, deflate")
 					.header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7")
 					.header("Connection", "keep-alive")
-					.header("Host", Host)
+					.header("Host", host)
 					.header("If-Modified-Since", "Fri, 22 Jun 2018 05:01:54 GMT")
 					.header("If-None-Match", "143700fb9537f0f4f2594302e44bcdf7-gzip")
 					.header("Upgrade-Insecure-Requests", "1")

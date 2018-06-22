@@ -1,5 +1,4 @@
 package com.hanji.main.crawler;
 
-public class ThreadPoolService {
-
+public class Parser {
 }
