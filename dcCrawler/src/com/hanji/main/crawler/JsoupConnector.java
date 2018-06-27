@@ -15,6 +15,20 @@ import org.jsoup.nodes.Document;
  */
 public class JsoupConnector {
 	
+	private static JsoupConnector instance;
+	
+	private JsoupConnector() {};
+	
+	public static JsoupConnector getInstance() {
+		if(instance==null) {
+			instance = new JsoupConnector();
+		}
+		return instance;
+	};
+	
+	//listpage검색 또는 article검색에 사용된다
+	//list일경우 페이지를받아서 검색하고
+	//article일경우 아티클번호로 검색한다.
 	public Document getJsoupDoc(String URL, HashMap<String, String> parameters, String host) {
 		Document doc = null;
 		

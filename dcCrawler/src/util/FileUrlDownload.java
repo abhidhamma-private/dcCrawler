@@ -1,4 +1,4 @@
-package com.hanji.main.crawler;
+package util;
 
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
