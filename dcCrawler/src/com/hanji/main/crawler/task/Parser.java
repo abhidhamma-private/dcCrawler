@@ -1,13 +1,55 @@
-package com.hanji.main.crawler;
+package com.hanji.main.crawler.task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.Callable;
+import java.util.logging.Logger;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import com.hanji.main.Appmain;
+import com.hanji.main.crawler.JsoupConnector;
 
-public class Parser {
+import util.FileUrlDownload;
+
+
+public class Parser implements Runnable{
+	private static final Logger logger = Logger.getLogger( Parser.class.getName() );
+	
+	int socketTimeOut; 
+	int socketTimeOutRetries; 
+	int workerCount; 
+	String existImageArticlesNum;
+	
+	public Parser(int socketTimeOut, int socketTimeOutRetries, int workerCount, String existImageArticlesNum) {
+		this.socketTimeOut = socketTimeOut;
+		this.socketTimeOutRetries = socketTimeOutRetries;
+		this.workerCount = workerCount;
+		this.existImageArticlesNum = existImageArticlesNum;
+		logger.setUseParentHandlers(true);
+	}
+	
+	public Parser() {}
+	
+	@Override
+	public void run() {
+		logger.info("THREAD RUN!");
+		String imgURL;
+		HashMap<String, String> articleParameters = new HashMap<String, String>();
+		articleParameters.put("no", existImageArticlesNum);
+		Document articleDoc = JsoupConnector.getInstance().getJsoupDoc(
+				"http://gall.dcinside.com/board/view/?id=leagueoflegends2", articleParameters,
+				"dcimg7.dcinside.co.kr");
+		imgURL = this.getImgSrc(articleDoc);
+		
+		String savePath = "D:\\info\\mycrawler\\download";
+		
+		FileUrlDownload.fileUrlReadAndDownload(imgURL, existImageArticlesNum + ".jpg", savePath);
+		System.out.println("URL주소 : " + imgURL);
+		logger.info("THREAD END!");
+	}
+	
 	//그림이포함된 article의 번호를 Array<String>배열로 리턴한다.
 	public ArrayList<String> getImgArticle(Document listDoc) {
 		//그림이 포함된 article번호를 담는다.
@@ -48,5 +90,7 @@ public class Parser {
 		}
 		return imgURL;
 	}
+
+
 	
 }
