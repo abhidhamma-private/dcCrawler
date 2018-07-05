@@ -5,7 +5,7 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.hanji.main.Appmain;
+import com.hanji.main.AppMain;
 import com.hanji.main.crawler.task.Parser;
 
 public class TaskExecutor {

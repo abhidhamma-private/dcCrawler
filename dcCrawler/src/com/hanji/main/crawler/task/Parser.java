@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import com.hanji.main.Appmain;
+import com.hanji.main.AppMain;
 import com.hanji.main.crawler.JsoupConnector;
 
 import util.FileUrlDownload;
